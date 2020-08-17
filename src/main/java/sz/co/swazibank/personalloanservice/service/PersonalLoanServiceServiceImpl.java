@@ -1,6 +1,7 @@
 package sz.co.swazibank.personalloanservice.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class PersonalLoanServiceServiceImpl implements PesonalLoanServiceService
 	
 	@Override
 	public void saveAndFlush(PersonalLoan thePersonalLoan) {
-		personalLoanRepository.save(thePersonalLoan);
+		personalLoanRepository.saveAndFlush(thePersonalLoan);
 		
 	}
 
@@ -30,6 +31,11 @@ public class PersonalLoanServiceServiceImpl implements PesonalLoanServiceService
 	public List<PersonalLoan> findInProgress() {
 		// TODO Auto-generated method stub
 		return personalLoanRepository.findInProgress();
+	}
+
+	@Override
+	public PersonalLoan findPersonalLoanById(int theId) {
+		return personalLoanRepository.findPersonalLoanById(theId);
 	}
 
 }

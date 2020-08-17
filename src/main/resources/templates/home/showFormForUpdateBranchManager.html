@@ -36,11 +36,24 @@
 					</div>
 				</div>
 
-				<form action="#" th:action="@{/personalLoan/save}" class="form"
+				<form action="#"
+					th:action="@{/personalLoan/saveBranchmanagerUpdate}" class="form"
 					th:object="${personalLoan}" method="POST"
 					enctype="multipart/form-data">
 
-					
+					<input type="hidden" th:field="*{id}" /> <input type="hidden"
+						th:field="*{funeralCover}" /> <input type="hidden"
+						th:field="*{floatingRate}" /> <input type="hidden"
+						th:field="*{managementFee}" /> <input type="hidden"
+						th:field="*{primaRate}" /> <input type="hidden"
+						th:field="*{creditAnalyst}" /> <input type="hidden"
+						th:field="*{creditAnalystEmail}" /> <input type="hidden"
+						th:field="*{securitiesSupervisor}" /> <input type="hidden"
+						th:field="*{securitiesSupervisorEmail}" /> <input type="hidden"
+						th:field="*{loanDisbursementSupervisor}" /> <input type="hidden"
+						th:field="*{loanDisbursementSupervisorEmail}" />
+
+
 
 					<div style="border-style: outset;">
 						<h5>Customer Resume</h5>
@@ -51,19 +64,19 @@
 						<div class="row">
 
 							<div class="form-group mb-2 col-2">
-								<label for="firstName">First Name:</label> <input type="text"
+								<label for="firstName">First Name:</label> <input type="text" readonly
 									th:field="*{firstName}" class="form-control"> <span
 									th:if="${#fields.hasErrors('firstName')}"
 									th:errors="*{firstName}"></span>
 							</div>
 							<div class="form-group mb-2 col-2">
-								<label for="surname">Surname:</label> <input type="text"
+								<label for="surname">Surname:</label> <input type="text" readonly
 									th:field="*{surname}" class="form-control"> <span
 									th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
 							</div>
 
 							<div class="form-group mb-2 col-2">
-								<label for="customerCif">Customer Cif:</label> <input
+								<label for="customerCif">Customer Cif:</label> <input readonly
 									type="text" th:field="*{customerCif}" class="form-control">
 								<span th:if="${#fields.hasErrors('customerCif')}"
 									th:errors="*{customerCif}"></span>
@@ -71,7 +84,7 @@
 
 
 							<div class="form-group mb-2 col-2">
-								<label for="*{dateOfBirth}">Date of Birth:</label> <input
+								<label for="*{dateOfBirth}">Date of Birth:</label> <input readonly
 									type="date" th:field="*{{dateOfBirth}}" class="form-control">
 								<span th:if="${#fields.hasErrors('dateOfBirth')}"
 									th:errors="*{dateOfBirth}"></span>
@@ -82,28 +95,28 @@
 						<div class="row">
 
 							<div class="form-group mb-2 col-2">
-								<label for="cellNumber">Cell Number:</label> <input
-									type="text" th:field="*{cellNumber}" class="form-control">
-								<span th:if="${#fields.hasErrors('cellNumber')}"
+								<label for="cellNumber">Cell Number:</label> <input type="text" readonly
+									th:field="*{cellNumber}" class="form-control"> <span
+									th:if="${#fields.hasErrors('cellNumber')}"
 									th:errors="*{cellNumber}"></span>
 							</div>
 
 							<div class="form-group mb-2 col-2">
-								<label for="employer">Customer Employer:</label> <input
+								<label for="employer">Customer Employer:</label> <input readonly
 									type="text" th:field="*{employer}" class="form-control">
 								<span th:if="${#fields.hasErrors('employer')}"
 									th:errors="*{employer}"></span>
 							</div>
 
 							<div class="form-group mb-2 col-2">
-								<label for="postalAddress">Postal Address:</label> <input
+								<label for="postalAddress">Postal Address:</label> <input readonly
 									type="text" th:field="*{postalAddress}" class="form-control">
 								<span th:if="${#fields.hasErrors('postalAddress')}"
 									th:errors="*{postalAddress}"></span>
 							</div>
 
 							<div class="form-group mb-6 col-6">
-								<label for="residentialAddress">Residential Address:</label> <input
+								<label for="residentialAddress">Residential Address:</label> <input readonly
 									type="text" th:field="*{residentialAddress}"
 									class="form-control"> <span
 									th:if="${#fields.hasErrors('residentialAddress')}"
@@ -121,13 +134,13 @@
 						<hr>
 						<div class="row">
 							<div class="form-group mb-2 col-2">
-								<label for="pledgedAccount">Pledged Account:</label> <input
+								<label for="pledgedAccount">Pledged Account:</label> <input readonly
 									type="text" th:field="*{pledgedAccount}" class="form-control">
 								<span th:if="${#fields.hasErrors('pledgedAccount')}"
 									th:errors="*{pledgedAccount}"></span>
 							</div>
 							<div class="form-group mb-2 col-2">
-								<label for="pledgedAccountBalance">Pledged Balance:</label> <input
+								<label for="pledgedAccountBalance">Pledged Balance:</label> <input readonly
 									th:field="*{pledgedAccountBalance}" type="number" step="0.01"
 									class="form-control"> <span
 									th:if="${#fields.hasErrors('pledgedAccountBalance')}"
@@ -135,7 +148,7 @@
 							</div>
 							<div class="form-group mb-2 col-2">
 								<label for="stopOrderOverSalaryAccount">stopOrderOverSalaryAccount:</label>
-								<input type="text" th:field="*{stopOrderOverSalaryAccount}"
+								<input type="text" th:field="*{stopOrderOverSalaryAccount}" readonly
 									class="form-control"> <span
 									th:if="${#fields.hasErrors('stopOrderOverSalaryAccount')}"
 									th:errors="*{stopOrderOverSalaryAccount}"></span>
@@ -146,28 +159,28 @@
 						<div class="row">
 
 							<div class="form-group mb-2 col-2">
-								<label for="loanStartDate">Start Date:</label> <input
+								<label for="loanStartDate">Start Date:</label> <input readonly
 									type="date" th:field="*{{loanStartDate}}" class="form-control">
 								<span th:if="${#fields.hasErrors('loanStartDate')}"
 									th:errors="*{loanStartDate}"></span>
 							</div>
 
 							<div class="form-group mb-2 col-2">
-								<label for="loanEndDate">End Date:</label> <input type="date"
+								<label for="loanEndDate">End Date:</label> <input type="date" readonly
 									th:field="*{{loanEndDate}}" class="form-control"> <span
 									th:if="${#fields.hasErrors('loanEndDate')}"
 									th:errors="*{loanEndDate}"></span>
 							</div>
 
 							<div class="form-group mb-7 col-7">
-								<label for="loanPurpose">Loan Purpose:</label> <input
+								<label for="loanPurpose">Loan Purpose:</label> <input readonly
 									type="text" th:field="*{loanPurpose}" class="form-control">
 								<span th:if="${#fields.hasErrors('loanPurpose')}"
 									th:errors="*{loanPurpose}"></span>
 							</div>
 
 							<div class="form-group mb-2 col-2">
-								<label for="previousLoanAmount">PreviousLoanAmount:</label> <input
+								<label for="previousLoanAmount">PreviousLoanAmount:</label> <input readonly
 									type="number" step="0.01" th:field="*{previousLoanAmount}"
 									class="form-control"> <span
 									th:if="${#fields.hasErrors('previousLoanAmount')}"
@@ -178,7 +191,7 @@
 						<div class="row">
 
 							<div class="form-group mb-2 col-2">
-								<label for="loanAmountRequested">Amount Requested:</label> <input
+								<label for="loanAmountRequested">Amount Requested:</label> <input readonly
 									type="number" step="0.01" th:field="*{loanAmountRequested}"
 									class="form-control"> <span
 									th:if="${#fields.hasErrors('loanAmountRequested')}"
@@ -186,7 +199,7 @@
 							</div>
 							<div class="form-group mb-9 col-9">
 								<label for="loanAmountFinalWords">Loan Amount
-									FinalWords:</label> <input type="text"
+									FinalWords:</label> <input type="text" readonly
 									th:field="*{loanAmountFinalWords}" class="form-control">
 								<span th:if="${#fields.hasErrors('loanAmountFinalWords')}"
 									th:errors="*{loanAmountFinalWords}"></span>
@@ -194,145 +207,8 @@
 						</div>
 
 					</div>
-					<div style="border-style: outset;">
-						<h5>Document Check</h5>
-						<hr>
-						<div class="row">
-
-
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<label class="input-group-text"
-										for="receiveMarkettingInformation">Have you supplied
-										the following documents?:</label>
-								</div>
-
-
-
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox"
-										id="levelTermInsurancePolicy"
-										th:checked="*{levelTermInsurancePolicy}"> <label
-										class="form-check-label" for="levelTermInsurancePolicy">Level
-										Term Insurance Policy</label>
-								</div>
-
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox"
-										id="creaditHistory" th:checked="*{creaditHistory}"> <label
-										class="form-check-label" for="creaditHistory">Credit
-										History</label>
-								</div>
-
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox"
-										id="cessionOver" th:checked="*{cessionOver}"> <label
-										class="form-check-label" for="cessionOver">Cession
-										Over</label>
-								</div>
-
-
-							</div>
-
-						</div>
-					</div>
-					<div style="border-style: outset;">
-						<h5>Marketing Information</h5>
-						<hr>
-
-
-						<div class="form-group">
-
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<label class="input-group-text"
-										for="receiveMarkettingInformation">Would you like to
-										receive marketing information?:</label>
-								</div>
-								<select class="form-control"
-									th:field="*{receiveMarkettingInformation}">
-
-									<option th:value="'Yes'" th:text="'Yes'">
-									<option th:value="'No'" th:text="'No'">
-								</select>
-							</div>
-
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<label class="input-group-text"
-										for="receiveMarkettingInformation">Would you like to
-										receive special products information?:</label>
-								</div>
-								<select class="form-control"
-									th:field="*{receiveSpecialProducts}">
-
-									<option th:value="'Yes'" th:text="'Yes'">
-									<option th:value="'No'" th:text="'No'">
-								</select>
-							</div>
-
-						</div>
-
-						<div>
-
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<label class="input-group-text"
-										for="receiveMarkettingInformation">I may be contacted
-										by:</label>
-								</div>
-
-
-
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox"
-										id="typeOfCommunicationMail"
-										th:checked="*{typeOfCommunicationMail}"> <label
-										class="form-check-label" for="typeOfCommunicationMail">Mail</label>
-								</div>
-
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox"
-										id="typeOfCommunicationEmail"
-										th:checked="*{typeOfCommunicationEmail}"> <label
-										class="form-check-label" for="typeOfCommunicationEmail">Email</label>
-								</div>
-
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox"
-										id="typeOfCommunicationSms"
-										th:checked="*{typeOfCommunicationSms}"> <label
-										class="form-check-label" for="typeOfCommunicationSms">SMS</label>
-								</div>
-
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox"
-										id="typeOfCommunicationTelephone"
-										th:checked="*{typeOfCommunicationTelephone}"> <label
-										class="form-check-label" for="typeOfCommunicationTelephone">Mail</label>
-								</div>
-
-							</div>
-
-
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<label class="input-group-text"
-										for="receiveMarkettingInformation">The Bank may use my
-										information for marketing purposes:</label>
-								</div>
-								<select class="form-control" th:field="*{sharingPersonalinfo}">
-
-									<option th:value="'Yes'" th:text="'Yes'">
-									<option th:value="'No'" th:text="'No'">
-								</select>
-							</div>
-
-						</div>
-
-					</div>
-
-
+					
+					
 					<div style="border-style: outset;">
 						<h5>Branch Information</h5>
 						<hr>
@@ -342,7 +218,7 @@
 
 							<div class="form-group mb-2 col-2">
 								<label for="businessConsultantName">Business Consultant
-									Name:</label> <input type="text" th:field="*{businessConsultantName}"
+									Name:</label> <input type="text" th:field="*{businessConsultantName}" readonly
 									class="form-control"> <span
 									th:if="${#fields.hasErrors('businessConsultantName')}"
 									th:errors="*{businessConsultantName}"></span>
@@ -350,15 +226,15 @@
 
 							<div class="form-group mb-2 col-2">
 								<label for="businessConsultantName">Business Consultant
-									Email:</label> <input type="email"
-									th:field="*{businessConsultantEmail}" class="form-control">
+									Email:</label> <input type="email" readonly
+									th:field="*{businessConsultantEmail}" class="form-control"> 
 								<span th:if="${#fields.hasErrors('businessConsultantEmail')}"
 									th:errors="*{businessConsultantEmail}"></span>
 							</div>
 
 							<div class="form-group mb-7 col-7">
 								<label for="businessConsultantComment">Business
-									Consultant Comment:</label> <input type="text"
+									Consultant Comment:</label> <input type="text" readonly
 									th:field="*{businessConsultantComment}" class="form-control">
 								<span th:if="${#fields.hasErrors('businessConsultantComment')}"
 									th:errors="*{businessConsultantComment}"></span>
@@ -370,7 +246,7 @@
 						<div class="row">
 
 							<div class="form-group mb-2 col-2">
-								<label for="*{branch}">Branch:</label> <select
+								<label for="*{branch}">Branch:</label> <select readonly
 									class="form-control" th:field="*{branch}">
 									<option th:value="''" th:text="''"></option>
 									<option th:value="'Ezulwini_Branch'"
@@ -398,14 +274,14 @@
 							</div>
 
 							<div class="form-group mb-2 col-2">
-								<label for="branchAddress">Branch Address:</label> <input
+								<label for="branchAddress">Branch Address:</label> <input readonly
 									type="text" th:field="*{branchAddress}" class="form-control">
 								<span th:if="${#fields.hasErrors('branchAddress')}"
 									th:errors="*{branchAddress}"></span>
 							</div>
 
 							<div class="form-group mb-2 col-2">
-								<label for="branchManagerName">Branch Manager Name:</label> <input
+								<label for="branchManagerName">Branch Manager Name:</label> <input readonly
 									type="text" th:field="*{branchManagerName}"
 									class="form-control"> <span
 									th:if="${#fields.hasErrors('branchManagerName')}"
@@ -413,18 +289,77 @@
 							</div>
 
 							<div class="form-group mb-2 col-2">
-								<label for="branchManagerEmail">Branch Manager Email:</label> <input
+								<label for="branchManagerEmail">Branch Manager Email:</label> <input readonly
 									type="email" th:field="*{branchManagerEmail}"
 									class="form-control"> <span
 									th:if="${#fields.hasErrors('branchManagerEmail')}"
 									th:errors="*{branchManagerEmail}"></span>
 							</div>
 
+						</div>
 
+					</div>
+					
+					
+					
+					
+					<div style="border-style: outset;">
+						<h5>Branch Information</h5>
+						<hr>
+						<div class="row"></div>
+
+						<div class="row">
+
+							<div class="form-group mb-2 col-2">
+								<label for="businessConsultantName">Business Consultant
+									Name:</label> <input type="text" th:field="*{businessConsultantName}" readonly
+									class="form-control"> <span
+									th:if="${#fields.hasErrors('businessConsultantName')}"
+									th:errors="*{businessConsultantName}"></span>
+							</div>
+							
+							<div class="form-group mb-2 col-2">
+								<label for="businessConsultantCommentDate">Date:</label> <input type="text" readonly
+									th:field="*{businessConsultantCommentDate}" class="form-control">
+								<span th:if="${#fields.hasErrors('businessConsultantCommentDate')}"
+									th:errors="*{businessConsultantCommentDate}"></span>
+							</div>
+
+							<div class="form-group mb-8 col-8">
+								<label for="businessConsultantComment">Business Consultant Comment:</label> <input type="text" readonly
+									th:field="*{businessConsultantComment}" class="form-control">
+								<span th:if="${#fields.hasErrors('businessConsultantComment')}"
+									th:errors="*{businessConsultantComment}"></span>
+							</div>
+
+							
+
+						</div>
+
+
+						<div class="row">
+
+							
+							
+							
+
+							<div class="form-group mb-12 col-12">
+								<label for="branchManagerComments">Branch Manager Comment
+									Email:</label> <input type="text"
+									th:field="*{branchManagerComments}" class="form-control">
+								<span th:if="${#fields.hasErrors('branchManagerComments')}"
+									th:errors="*{branchManagerComments}"></span>
+							</div>
+
+							
 
 						</div>
 
 					</div>
+					
+					
+					
+					
 
 					<div style="border-style: outset;">
 						<h5>Next Actions</h5>
@@ -436,15 +371,16 @@
 								<label for="loanStatus">loanStatus:</label> <select
 									class="form-control" th:field="*{loanStatus}">
 
-									<option th:value="'Pendig Branch Manager Comments'"
-										th:text="'Forward to Branch Manager'">
+									<option th:value="'Pendig Credit Analyst Comments'" th:text="'Forward to Credit'">
+									<option th:value="'Pendig Business Consultant Updates'" th:text="'Return to Business Consultant'">
+									
 								</select>
 							</div>
 
 							<div class="form-group mb-2 col-2">
-								<label for="file1">Upload Support Documents:</label><input
-									type="file" class="form-control" name="file" id="file1"
-									required />
+								<label for="*{payslipLocation}">View Documents Loaded:</label> <a
+									th:href="@{/personalLoan/download_file(fileName = *{securitiesLocation})}"
+									class="text-danger">download</a>
 							</div>
 
 

@@ -373,8 +373,8 @@ public class PersonalLoan_Generate_Short_Securities extends AbstractPdfView {
 		Font body = FontFactory.getFont(FontFactory.TIMES, 9, Font.NORMAL);
 		Font parameter = FontFactory.getFont(FontFactory.TIMES, 9, Font.BOLD);
 
-		//Image img = Image.getInstance("http://localhost:8097/img/logo.jpg");
-		Image img = Image.getInstance("http://live-intranet.swazibank.co.sz:8151/actuator/info/img/logo.jpg");
+		Image img = Image.getInstance("http://localhost:8097/img/logo.jpg");
+		//Image img = Image.getInstance("http://live-intranet.swazibank.co.sz:8151/actuator/info/img/logo.jpg");
 		document.add((Element) img);
 
 		Phrase application = new Phrase();

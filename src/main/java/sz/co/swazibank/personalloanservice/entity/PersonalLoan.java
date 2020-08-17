@@ -30,7 +30,7 @@ public class PersonalLoan {
 	@Column(name = "id")
 	private int id;
 
-	@Email
+	@Email(message = "Enter a valid email address.") 
 	@Column(name = "business_consultant_email")
 	private String businessConsultantEmail;
 
@@ -52,7 +52,7 @@ public class PersonalLoan {
 	@Column(name = "branch_manager_name")
 	private String branchManagerName;
 
-	@Email
+	@Email(message = "Enter a valid email address.") 
 	@Column(name = "branch_manager_email")
 	private String branchManagerEmail;
 
@@ -71,7 +71,7 @@ public class PersonalLoan {
 	@Column(name = "credit_analyst")
 	private String creditAnalyst;
 
-	@Email
+	@Email(message = "Enter a valid email address.") 
 	@Column(name = "credit_analyst_email")
 	private String creditAnalystEmail;
 
@@ -163,7 +163,7 @@ public class PersonalLoan {
 	@Column(name = "loan_disbursement_supervisor")
 	private String loanDisbursementSupervisor;
 
-	@Email
+	@Email(message = "Enter a valid email address.") 
 	@Column(name = "loan_disbursement_supervisor_email")
 	private String loanDisbursementSupervisorEmail;
 
@@ -176,7 +176,7 @@ public class PersonalLoan {
 	@Column(name = "manager_credit_name")
 	private String managerCreditName;
 
-	@Email
+	@Email(message = "Enter a valid email address.") 
 	@Column(name = "manager_credit_email")
 	private String managerCreditEmail;
 
@@ -213,7 +213,7 @@ public class PersonalLoan {
 	@Column(name = "securities_supervisor")
 	private String securitiesSupervisor;
 
-	@Email
+	@Email(message = "Enter a valid email address.") 
 	@Column(name = "securities_supervisor_email")
 	private String securitiesSupervisorEmail;
 

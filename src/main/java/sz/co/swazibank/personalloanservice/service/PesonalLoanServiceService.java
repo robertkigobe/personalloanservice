@@ -12,4 +12,6 @@ public interface PesonalLoanServiceService {
 
 	public List<PersonalLoan> findInProgress();
 
+	public PersonalLoan findPersonalLoanById(int theId);
+
 }
