@@ -48,7 +48,7 @@ public class PersonalLoan_Generate_Short_Securities extends AbstractPdfView {
 		LocalDate localDateLoanStartDate = loanStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate localLoanEndDate = loanEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-		long loanPeriod = ChronoUnit.MONTHS.between(localDateLoanStartDate, localLoanEndDate);
+		long loanPeriod = ChronoUnit.MONTHS.between(localDateLoanStartDate, localLoanEndDate) +1;
 		long customerAge = ChronoUnit.YEARS.between(localDateDob, now);
 
 		/////////// date month and year calculation//////
@@ -355,7 +355,7 @@ public class PersonalLoan_Generate_Short_Securities extends AbstractPdfView {
 		double totalPayment = 0;
 		double principal = 0;
 		double finalValue = 0;
-		double interest = 0;
+		double interest = thePersonalLoan.getPrimaRate()+thePersonalLoan.getFloatingRate();
 		double endingBalance = 0;
 		double totalInterest = 0;
 		totalInterest = interest * loanPeriod;
@@ -363,7 +363,7 @@ public class PersonalLoan_Generate_Short_Securities extends AbstractPdfView {
 
 		singlePremium = 6.91 * loanPeriod;
 		levelTermInsurance = (x * presentValue / 1000) + singlePremium;
-		//initiationfee = (thePersonalLoan.getLoanAmountRequested() + itcCharge + levelTermInsurance);
+		initiationfee = (thePersonalLoan.getLoanAmountRequested()  + levelTermInsurance)*0.08; //initiation fee
 		loanAndCharges = levelTermInsurance + initiationfee + presentValue;
 
 
@@ -392,32 +392,29 @@ public class PersonalLoan_Generate_Short_Securities extends AbstractPdfView {
 				body));
 		application.add(new Chunk(" (a) Credit Life Cover ", body));
 		application.add(new Chunk("E" + String.valueOf(levelTermInsurance), parameter));
-		application.add(new Chunk("  (b) Initiation Fee	    E ", body));
+		application.add(new Chunk("  (b) Initiation Fee	", body));
 		application.add(new Chunk("E"+ String.valueOf(initiationfee), parameter));
 		application.add(new Chunk("  (c) Credit account No.", body));
-		application.add(new Chunk("XXX", parameter));
-		application.add(new Chunk("  (d) Service Fee        E", body));
-		application.add(new Chunk("XXX", parameter));
+		application.add(new Chunk(thePersonalLoan.getStopOrderOverSalaryAccount(), parameter));
+		application.add(new Chunk("  (d) Service Fee ", body));
+		application.add(new Chunk("E 119.00", parameter)); //to pick form loan setup standing fee
 		application.add(new Chunk(
-				"\n\n2. 	Interest on the loan will be payable by me  at the rate equals to prime + XXX% ( XXX    %) per annum "
+				"\n\n2. 	Interest on the loan will be payable by me  at the rate equals to Prime rate("+thePersonalLoan.getPrimaRate()+"%) + Floating rate( "+thePersonalLoan.getFloatingRate()+"%) which is  "+ interest +"  %) per annum "
 						+ "calculated from the date the loan is granted until the end of the month during which it is granted and "
 						+ "compounded monthly in arrears thereafter.  I agree that the Bank has the right to increase this rate at "
 						+ "any time to a rate which will not be in excess of the rate provided by the Consumer Credit Act 2016 .  "
 						+ "The right to increase the rate of interest will apply by changing those things which need to be changed "
-						+ "on any other loan/s granted to me against the security of deposits and which have not at the date "
-						+ "hereof been paid.",
-				body));
+						+ "on any other loan/s granted to me against the security of deposits and which have not at the date hereof been paid",body));
 
 		application.add(new Chunk(
 				"\n\n3. 	The loan together with compound interest thereon shall be repayable in ", body));application.add(new Chunk(String.valueOf(loanPeriod) + "Months", parameter));application.add(new Chunk(" instalments of  "
-						+ "EXXX per month or in full on XXX. or on demand made by the Bank by letter to me at the  "
+						+ "EXXX per month or in full on ", body)); application.add(new Chunk("The "+dayOne1+" of "+monthOneV1+" "+yearOne1 , parameter));  application.add(new Chunk(" or on demand made by the Bank by letter to me at the  "
 						+ "address registered in the Bank’s records or on the day on which the pledge deposits mature, whichever is the earlier.",
 				body));
 
 		application.add(new Chunk(
 				"\n\n4.	As security for repayment of the loan together with interest thereon.  I hereby pledge to the Bank the "
-						+ "deposits specified below and being (type of cash security) ……………………………………... together "
-						+ "with all benefits accruing thereon.  I hereby agree that unless the loan together with interest thereon is "
+						+ "deposits specified below and being (cash amount) ", body));		application.add(new Chunk("E"+thePersonalLoan.getPledgedAccountBalance(), parameter));		application.add(new Chunk( " together with all benefits accruing thereon.  I hereby agree that unless the loan together with interest thereon is "
 						+ "repaid before the deposits mature they shall be reinvested on maturity at the discretion of the Bank and "
 						+ "the relevant new deposit receipts shall be deemed to have been pledged to the Bank.  Should I fail to "
 						+ "repay the loan together with interest thereon on the day on which the loan is repaid, the Bank is hereby "
@@ -431,9 +428,9 @@ public class PersonalLoan_Generate_Short_Securities extends AbstractPdfView {
 				body));
 
 		application.add(new Chunk(
-				"\n\n6.	I admit full knowledge that this loan is secured by ______________________________________ "
-						+ "and funds held by the Bank under Account No._________________________.",
-				body));
+				"\n\n6.	I admit full knowledge that this loan is secured by _______PLEDGED ACCOUNT NAME____ "
+						+ "and funds held by the Bank under Account No.",
+				body)); application.add(new Chunk(thePersonalLoan.getPledgedAccount(),parameter));
 
 		application.add(new Chunk("\n\n7.	I acknowledge having received copy of this application.", body));
 
@@ -449,75 +446,79 @@ public class PersonalLoan_Generate_Short_Securities extends AbstractPdfView {
 		application.add(new Chunk("\n\n10.        I consent to the following:", body));
 
 		application.add(new Chunk(
-				"\n10.1 Marketing of bank products, services and special offers to me:	Yes		No ", body));
+				"\n10.1 Marketing of bank products, services and special offers to me:	xxxxxxx ", body));
 
 		application.add(new Chunk(
-				"\n10.2 Communicating other company products, services and special offers to me. If I respond positively    to such communication I may be contacted by the bank:		Yes		No",
+				"\n10.2 Communicating other company products, services and special offers to me. If I respond positively    to such communication I may be contacted by the bank:		xxxxxxx",
 				body));
 
 		application.add(new Chunk(
-				"\n10.3 Sharing of my personal information within the bank for marketing purposes and the bank marketing its products, services and other special offers to me:		Yes		No",
+				"\n10.3 Sharing of my personal information within the bank for marketing purposes and the bank marketing its products, services and other special offers to me:		xxxxxx",
 				body));
 
 		application.add(
 				new Chunk("\n10.4 I may be happy to receive such communication via (Please tick where applicable):\r\n"
-						+ "Mail		Telephone		SMS		Email", body));
+						+ "Mail xxxx		Telephone xxx		SMS xxxx	Email xxxx", body));
+
+		
 
 		application.add(new Chunk(
-				"\n\n11. 	No I do not want to receive any communication from the bank on products, services or special offers and understand that this means "
-						+ "that I will not be kept informed of products and services that may be of value to me. I will therefore not hold the bank liable for any "
-						+ "opportunities I may lose as a result of the decision.",
-				body));
-
-		application.add(new Chunk(
-				"\n\n12. 	I agree that the bank may enquire about my credit record with any credit reference agencies to consider this application or to update any information. "
+				"\n\n11. 	I agree that the bank may enquire about my credit record with any credit reference agencies to consider this application or to update any information. "
 						+ "I agree that the bank may share any information with the credit agencies about how to manage the loan agreement during the time of the loan."
 						+ " I agree that the bank may carry out identity, fraud and anti-money laundering checks and share information to this application with the relevant "
 						+ "authorities as per the requirements of the Money Laundering and Financing of Terrorism (Prevention) Act 2011 (as amended).",
 				body));
 
-		application.add(new Chunk("\n\nDate:……………………………………………………………….		Signature:………………………………………………………", body));
+		application.add(new Chunk("\n\nDate: "+new Date()+"		Signature:………………………………………………………", body));
 		application.add(new Chunk("\n\nPLEDGED DEPOSITS", subtitle));
 		document.add(application);
 
-		PdfPTable pledgeddepositsTable = new PdfPTable(2);
+		PdfPTable pledgeddepositsTable = new PdfPTable(3);
 		pledgeddepositsTable.setWidthPercentage(100);
 		pledgeddepositsTable.setHorizontalAlignment(Element.ALIGN_LEFT);
-		pledgeddepositsTable.setWidths(new int[] { 3, 2 });
+		pledgeddepositsTable.setWidths(new int[] { 2,2, 2 });
 		pledgeddepositsTable.getDefaultCell().setBorder(Rectangle.BOX);
 
+		pledgeddepositsTable.addCell(new Paragraph("DEPOSIT A/C NAME.", body));
 		pledgeddepositsTable.addCell(new Paragraph("DEPOSIT A/C NO.", body));
 		pledgeddepositsTable.addCell(new Paragraph("VALUE (E)", body));
 
-		pledgeddepositsTable.addCell(new Paragraph("xxx", body));
-		pledgeddepositsTable.addCell(new Paragraph("xxx", body));
+		pledgeddepositsTable.addCell(new Paragraph("xxxxx", parameter));
+		pledgeddepositsTable.addCell(new Paragraph(thePersonalLoan.getPledgedAccount(), parameter));
+		pledgeddepositsTable.addCell(new Paragraph(String.valueOf(thePersonalLoan.getPledgedAccountBalance()), parameter));
 
 		document.add(pledgeddepositsTable);
+		
+		Phrase application2 = new Phrase();
+		application2.add(new Chunk("\n\nFOR OFFICIAL USE ONLY", subtitle));
+		document.add(application2);
+		
 
 		PdfPTable officialuseTable = new PdfPTable(3);
 		officialuseTable.setWidthPercentage(100);
 		officialuseTable.setHorizontalAlignment(Element.ALIGN_LEFT);
-		officialuseTable.setWidths(new int[] { 5, 5, 5 });
+		officialuseTable.setWidths(new int[] { 2, 2, 2 });
 		officialuseTable.getDefaultCell().setBorder(Rectangle.BOX);
 
-		officialuseTable.addCell(new Paragraph("DEPOSITs PLEDGED", body));
-		officialuseTable.addCell(new Paragraph("DOCUMENTS ATTACHED", body));
+		officialuseTable.addCell(new Paragraph("DOCUMENTS REQUIRED", body));
+		officialuseTable.addCell(new Paragraph("DOCUMENTS STATUS", body));
 		officialuseTable.addCell(new Paragraph("BRANCH MANAGER SIGNATURE", body));
 
-		officialuseTable.addCell(new Paragraph("xxx\nXXX\nxxx\nxxxx\nxxx", body));
-		officialuseTable.addCell(new Paragraph("xxx\nXXX\nxxx\nxxxx\nxxx", body));
+		officialuseTable.addCell(new Paragraph("Customer ID \nProof of residence \nCertificate of balance \nSignature Verified \nITC Report \nLevel Term Insurance Policy\nCredit History\nCession Over", body));
+		officialuseTable.addCell(new Paragraph("Uploaded\nNot Uploaded\nUploaded\nNot Uploaded\nUploaded\nNot Uploaded\nUploaded\nNot Uploaded", body));
 		officialuseTable.addCell(new Paragraph("", body));
 
 		document.add(officialuseTable);
+		document.add(new Chunk("\n",body));
 
 		Phrase applicationDescision = new Phrase();
 
 		applicationDescision.add(new Chunk("\n\nAPPLICATION  APPROVED / DEFERRED / DECLINED", body));
-		applicationDescision.add(new Chunk("xxx", body));
-		applicationDescision.add(new Chunk("DATE:", body));
-		applicationDescision.add(new Chunk("xxx", body));
-		applicationDescision.add(new Chunk("AUTHORISED SIGNATURE: …………………………………………", body));
-		applicationDescision.add(new Chunk("\n\nCustomer to be given a copy of this application", body));
+		applicationDescision.add(new Chunk("Decision", parameter));
+		applicationDescision.add(new Chunk("\nDATE:", body));
+		applicationDescision.add(new Chunk(String.valueOf(new Date()), body));
+		applicationDescision.add(new Chunk("\\nnAUTHORISED SIGNATURE: …………………………………………", body));
+		applicationDescision.add(new Chunk("\nCustomer copy", parameter));
 		document.add(applicationDescision);
 
 
@@ -529,8 +530,8 @@ public class PersonalLoan_Generate_Short_Securities extends AbstractPdfView {
 		sanction.add(new Chunk("\n\nTO:		MANAGER     BRANCH", title));
 		sanction.add(new Chunk("\nFROM:		MANAGER CREDIT", title));
 		sanction.add(new Chunk("\nDATE:", title));
-		sanction.add(new Chunk("xxx", body));
-		sanction.add(new Chunk("\nBORROWER:	……………..CIF:", body));
+		sanction.add(new Chunk(String.valueOf(new Date())));
+		sanction.add(new Chunk("\nBORROWER:	" + customerName + ".CIF: " + cif , parameter));
 		sanction.add(new Chunk("\nFACILITY/TYPE:	 PERSONAL LOAN", body));
 		sanction.add(new Chunk("\nAMOUNT", body));
 		sanction.add(new Chunk("\nRATE", body));
